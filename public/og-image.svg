@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0014;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a0040;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow1" cx="30%" cy="40%" r="50%">
+      <stop offset="0%" style="stop-color:#7C00FF;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#7C00FF;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glow2" cx="80%" cy="60%" r="40%">
+      <stop offset="0%" style="stop-color:#fc00ff;stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:#fc00ff;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow1)" />
+  <rect width="1200" height="630" fill="url(#glow2)" />
+  <!-- Grid lines -->
+  <g stroke="#7C00FF" stroke-width="0.5" opacity="0.12">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+  <!-- Accent dot -->
+  <circle cx="100" cy="80" r="6" fill="#83ff00" opacity="0.9"/>
+  <!-- Brand name -->
+  <text x="100" y="280" font-family="Arial, sans-serif" font-size="96" font-weight="800" fill="white" letter-spacing="-2">Queta AI</text>
+  <!-- Tagline -->
+  <text x="100" y="350" font-family="Arial, sans-serif" font-size="32" font-weight="400" fill="#c4b5fd" letter-spacing="0.5">Your AI. Your Persona. Your Edge.</text>
+  <!-- Bottom bar -->
+  <rect x="100" y="430" width="120" height="4" rx="2" fill="#7C00FF"/>
+  <text x="100" y="480" font-family="Arial, sans-serif" font-size="22" fill="#ffffff" opacity="0.5" letter-spacing="3">queta.ai</text>
+</svg>
