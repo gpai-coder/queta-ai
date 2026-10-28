@@ -6,7 +6,7 @@ Maintained source for user-visible routes on the Queta AI replica. Read this ind
 
 - Run from repo root on branch under test.
 - `npm install` and `npx playwright install chromium` completed.
-- Port 3000 free before `npm run verify` (the script starts its own `next start`).
+- Port 3005 free before `npm run verify` unless `VERIFY_BASE_URL` points elsewhere (the script starts its own `next start`).
 - Evidence survives cleanup under `verification-evidence/<runId>/`.
 
 ## Driving conventions
