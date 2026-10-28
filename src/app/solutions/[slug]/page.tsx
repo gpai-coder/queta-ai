@@ -1,0 +1,42 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { SiteShell } from "@/components/layout/SiteShell";
+import { SolutionPage } from "@/components/pages/SolutionPage";
+import { solutions, type PersonaSlug } from "@/content/site-content";
+
+const slugs: PersonaSlug[] = ["lifestyle", "realtor", "trader", "office-manager"];
+
+export function generateStaticParams() {
+  return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const content = solutions[slug as PersonaSlug];
+  if (!content) {
+    return { title: "Queta AI" };
+  }
+  return { title: content.metaTitle };
+}
+
+export default async function SolutionRoutePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const content = solutions[slug as PersonaSlug];
+  if (!content) {
+    notFound();
+  }
+
+  return (
+    <SiteShell>
+      <SolutionPage content={content} />
+    </SiteShell>
+  );
+}
