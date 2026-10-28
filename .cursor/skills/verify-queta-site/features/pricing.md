@@ -26,4 +26,4 @@ Steps:
 
 ## Gotchas
 
-- **Get Started** links route to `/contact` (demo request), matching queta.ai.
+- **Get Started** links route to `/contact` with a prefilled `interest` query for each tier.

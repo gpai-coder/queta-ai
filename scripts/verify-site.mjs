@@ -1,17 +1,18 @@
 #!/usr/bin/env node
-import { spawn, spawnSync } from "node:child_process";
+import { spawn, spawnSync, execSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { chromium, devices } from "@playwright/test";
+import { verifyContactForm } from "./verify-contact-form.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const runId = new Date().toISOString().replace(/[:.]/g, "-");
 const evidenceDir = path.join(root, "verification-evidence", runId);
 const pidFile = path.join(root, ".verification-dev-server.pid");
-const localBase = process.env.VERIFY_BASE_URL ?? "http://127.0.0.1:3000";
+const localBase = process.env.VERIFY_BASE_URL ?? "http://127.0.0.1:3005";
 const originalBase = "https://www.queta.ai";
 
 const routes = [
@@ -54,7 +55,26 @@ async function waitForServer(url, timeoutMs = 120_000) {
   throw new Error(`Server did not become ready at ${url}`);
 }
 
+async function freePort3000() {
+  const port = new URL(localBase).port || "3005";
+  try {
+    const pids = execSync(`lsof -ti :${port}`, { encoding: "utf8" })
+      .trim()
+      .split("\n")
+      .filter(Boolean);
+    for (const pid of pids) {
+      process.kill(Number(pid), "SIGTERM");
+    }
+    if (pids.length > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  } catch {
+    // port already free or lsof unavailable
+  }
+}
+
 async function startServer() {
+  await freePort3000();
   try {
     const pid = Number(await readFile(pidFile, "utf8"));
     if (pid) {
@@ -70,7 +90,7 @@ async function startServer() {
 
   const child = spawn("npm", ["run", "start"], {
     cwd: root,
-    env: { ...process.env, PORT: "3000" },
+    env: { ...process.env, PORT: new URL(localBase).port || "3005" },
     stdio: ["ignore", "pipe", "pipe"],
   });
 
@@ -87,7 +107,7 @@ async function startServer() {
   await writeFile(pidFile, String(child.pid));
   await waitForServer(`${localBase}/`);
   if (startupFailed) {
-    throw new Error("next start failed to bind port 3000");
+    throw new Error(`next start failed to bind port ${new URL(localBase).port}`);
   }
   return child;
 }
@@ -173,9 +193,12 @@ async function main() {
   const browser = await chromium.launch();
   let server;
   const results = [];
+  let contactFormResults = null;
 
   try {
     server = await startServer();
+
+    contactFormResults = await verifyContactForm(browser, evidenceDir, localBase);
 
     for (const base of [
       { label: "replica", url: localBase },
@@ -213,6 +236,7 @@ async function main() {
     runId,
     evidenceDir,
     routes,
+    contactFormResults,
     results,
     failures: failures.map(({ label, route, status, consoleErrors, brokenImages, failedRequests }) => ({
       label,

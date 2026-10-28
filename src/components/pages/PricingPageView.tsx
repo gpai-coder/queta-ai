@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
-import { navigation, pricing } from "@/content/site-content";
+import { pricing } from "@/content/site-content";
+import { contactPageHref } from "@/lib/contact-form";
 
 export function PricingPageView() {
   return (
@@ -52,7 +53,7 @@ export function PricingPageView() {
                 </ul>
                 <div className="p-8 pt-0">
                   <Link
-                    href={navigation.cta.href}
+                    href={contactPageHref(tier.interestKey)}
                     className="block w-full text-center py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity"
                   >
                     {tier.cta}
@@ -97,10 +98,10 @@ export function PricingPageView() {
           </h2>
           <p className="text-muted-foreground mb-8">{pricing.bottomCta.description}</p>
           <Link
-            href={navigation.cta.href}
+            href={contactPageHref(pricing.bottomCta.interestKey)}
             className="inline-flex px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity"
           >
-            {navigation.cta.label}
+            {pricing.bottomCta.buttonLabel}
           </Link>
         </div>
       </section>

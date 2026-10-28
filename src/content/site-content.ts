@@ -190,6 +190,7 @@ export const pricing = {
         "Spending Coach",
       ],
       cta: "Get Started",
+      interestKey: "get-started-lifestyle-user",
     },
     {
       name: "Trader",
@@ -205,6 +206,7 @@ export const pricing = {
         "Trade Journal Automation",
       ],
       cta: "Get Started",
+      interestKey: "get-started-trader",
     },
     {
       name: "Realtor / Office Manager",
@@ -220,6 +222,7 @@ export const pricing = {
         "Email & Calendar Manager",
       ],
       cta: "Get Started",
+      interestKey: "get-started-realtor-office-manager",
     },
   ],
   why: {
@@ -235,6 +238,8 @@ export const pricing = {
   bottomCta: {
     title: "Ready to get your edge?",
     description: "Join the waitlist and be first to access your AI persona.",
+    buttonLabel: "Join the waitlist",
+    interestKey: "waitlist",
   },
 } as const;
 
@@ -311,10 +316,20 @@ export const contact = {
   },
   form: {
     submitLabel: "Submit",
+    sendingLabel: "Sending…",
+    successMessage:
+      "Thanks for reaching out. We received your message and will get back to you within 24 hours.",
+    errorMessage:
+      "Something went wrong while sending your message. Please try again in a moment.",
     fields: {
       name: { label: "Name", placeholder: "Your full name", type: "text" as const },
       email: { label: "Email", placeholder: "you@example.com", type: "email" as const },
       phone: { label: "Phone Number", placeholder: "Your phone number", type: "tel" as const },
+      interest: {
+        label: "Interest",
+        placeholder: "How can we help?",
+        type: "text" as const,
+      },
       comments: {
         label: "Comments",
         placeholder: "Tell us how we can help...",
